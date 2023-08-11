@@ -1,11 +1,29 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const authorization = require("./middleware/authorization");
+const encoder = require("./encode");
 
-const login = require('./login')
+const port = 3000;
 
-app.use(express.json())
+const login = require("./login");
 
-app.post('/login', login)
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.use(express.json());
+
+app.post("/login", login);
+
+app.post("/encode", authorization, (req, res) => {
+  const { inputString } = req.body;
+
+  const encodedString = encoder(inputString);
+
+  return res.status(200).json({ encodedString });
+});
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
