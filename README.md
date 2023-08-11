@@ -1,3 +1,7 @@
-# code-challenge
+# code-challenge backend
 
-Tested with node v10.16.3
+### How to run
+
+1. Clone the repository
+2. Run `npm install`
+3. Run `npm start`
